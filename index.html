@@ -267,6 +267,64 @@
   .cred-card h4{font-family:var(--display);font-size:15.5px;font-weight:600;margin-bottom:6px;line-height:1.3;}
   .cred-card p{font-family:var(--mono);font-size:11.5px;color:var(--text-faint);}
 
+  .cred-clickable{cursor:pointer;}
+  .cred-clickable:hover{border-color:var(--accent);}
+  .cred-clickable:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+  .cred-view{
+    display:inline-block;font-family:var(--mono);font-size:11px;color:var(--accent-2);
+    margin-top:12px;opacity:0;transform:translateY(-4px);
+    transition:opacity .2s ease, transform .2s ease;
+  }
+  .cred-clickable:hover .cred-view,
+  .cred-clickable:focus-visible .cred-view{opacity:1;transform:translateY(0);}
+
+  /* ---------- CERTIFICATE MODAL ---------- */
+  .cert-modal-overlay{
+    position:fixed;inset:0;z-index:300;
+    background:rgba(5,7,12,0.82);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+    display:flex;align-items:center;justify-content:center;
+    padding:24px;
+    opacity:0;pointer-events:none;
+    transition:opacity .25s ease;
+  }
+  .cert-modal-overlay.open{opacity:1;pointer-events:auto;}
+  .cert-modal{
+    background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;
+    max-width:720px;width:100%;max-height:88vh;
+    display:flex;flex-direction:column;overflow:hidden;
+    transform:translateY(16px) scale(0.98);
+    transition:transform .25s ease;
+  }
+  .cert-modal-overlay.open .cert-modal{transform:translateY(0) scale(1);}
+  .cert-modal-head{
+    display:flex;align-items:flex-start;justify-content:space-between;gap:16px;
+    padding:20px 22px;border-bottom:1px solid var(--border);
+  }
+  .cert-modal-head h3{font-family:var(--display);font-size:18px;font-weight:600;margin-bottom:4px;}
+  .cert-modal-head p{font-family:var(--mono);font-size:12px;color:var(--text-faint);}
+  .cert-modal-close{
+    background:var(--bg-elev-2);border:1px solid var(--border);color:var(--text-dim);
+    width:32px;height:32px;border-radius:8px;flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;font-size:18px;line-height:1;
+    cursor:pointer;transition:all .2s ease;
+  }
+  .cert-modal-close:hover{color:var(--text);border-color:var(--text-faint);}
+  .cert-modal-body{
+    padding:22px;overflow:auto;display:flex;align-items:center;justify-content:center;
+    background:var(--bg);
+  }
+  .cert-modal-body img{max-width:100%;border-radius:6px;display:block;}
+  .cert-modal-linkout{
+    display:flex;flex-direction:column;align-items:center;gap:18px;
+    text-align:center;padding:36px 20px;
+  }
+  .cert-modal-linkout p{color:var(--text-dim);font-size:14px;max-width:380px;}
+  @media (max-width:640px){
+    .cert-modal{max-height:92vh;}
+    .cert-modal-head{padding:16px 18px;}
+    .cert-modal-body{padding:16px;}
+  }
+
   /* ---------- CONTACT ---------- */
   .contact-panel{
     background:var(--bg-elev);border:1px solid var(--border);border-radius:16px;
@@ -604,30 +662,55 @@
     <div class="section-label">verified</div>
     <h2 class="section-title reveal">Certifications & honors</h2>
     <div class="cred-grid">
-      <div class="cred-card reveal tilt-card">
+      <div class="cred-card reveal tilt-card cred-clickable" tabindex="0" role="button"
+        data-cert-type="link"
+        data-cert-url="https://www.hackerrank.com/certificates/0ddcf6b15e7f"
+        data-cert-title="SQL (Advanced) Certificate"
+        data-cert-sub="HackerRank · Jul 2026">
         <div class="cred-type">Certification</div>
         <h4>SQL (Advanced) Certificate</h4>
         <p>HackerRank · Jul 2026</p>
+        <span class="cred-view">View certificate →</span>
       </div>
-      <div class="cred-card reveal tilt-card">
+      <div class="cred-card reveal tilt-card cred-clickable" tabindex="0" role="button"
+        data-cert-type="link"
+        data-cert-url="https://www.mygreatlearning.com/certificate/EUHBNFYW"
+        data-cert-title="Analyzing & Visualizing Data with Power BI"
+        data-cert-sub="Microsoft · Jun 2026">
         <div class="cred-type">Certification</div>
         <h4>Analyzing & Visualizing Data with Power BI</h4>
         <p>Microsoft · Jun 2026</p>
+        <span class="cred-view">View certificate →</span>
       </div>
-      <div class="cred-card reveal tilt-card">
+      <div class="cred-card reveal tilt-card cred-clickable" tabindex="0" role="button"
+        data-cert-type="image"
+        data-cert-url="https://certificates.simplicdn.net/share/10361973_10669726_1781763899356.png"
+        data-cert-title="Introduction to Cyber Security"
+        data-cert-sub="SkillUp Coalition · Jun 2026">
         <div class="cred-type">Certification</div>
         <h4>Introduction to Cyber Security</h4>
         <p>SkillUp Coalition · Jun 2026</p>
+        <span class="cred-view">View certificate →</span>
       </div>
-      <div class="cred-card reveal tilt-card">
+      <div class="cred-card reveal tilt-card cred-clickable" tabindex="0" role="button"
+        data-cert-type="image"
+        data-cert-url="https://certificates.simplicdn.net/share/10361731_10669726_1781761513737.png"
+        data-cert-title="Introduction to Generative AI"
+        data-cert-sub="Google Cloud Skills Boost · Jun 2026">
         <div class="cred-type">Certification</div>
         <h4>Introduction to Generative AI</h4>
         <p>Google Cloud Skills Boost · Jun 2026</p>
+        <span class="cred-view">View certificate →</span>
       </div>
-      <div class="cred-card reveal tilt-card">
+      <div class="cred-card reveal tilt-card cred-clickable" tabindex="0" role="button"
+        data-cert-type="image"
+        data-cert-url="https://certificates.simplicdn.net/share/10361522_10669726_1781757294905.png"
+        data-cert-title="Artificial Intelligence Beginners Guide"
+        data-cert-sub="Simplilearn · Jun 2026">
         <div class="cred-type">Certification</div>
         <h4>Artificial Intelligence Beginners Guide</h4>
         <p>Simplilearn · Jun 2026</p>
+        <span class="cred-view">View certificate →</span>
       </div>
       <div class="cred-card reveal tilt-card">
         <div class="cred-type">Honor</div>
@@ -662,6 +745,20 @@
   </section>
 
 </main>
+
+<!-- CERTIFICATE MODAL -->
+<div class="cert-modal-overlay" id="certModalOverlay">
+  <div class="cert-modal" role="dialog" aria-modal="true" aria-labelledby="certModalTitle">
+    <div class="cert-modal-head">
+      <div>
+        <h3 id="certModalTitle">Certificate</h3>
+        <p id="certModalSub"></p>
+      </div>
+      <button class="cert-modal-close" id="certModalClose" aria-label="Close">✕</button>
+    </div>
+    <div class="cert-modal-body" id="certModalBody"></div>
+  </div>
+</div>
 
 <footer>
   <div class="wrap" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;width:100%;">
@@ -847,6 +944,77 @@
       counters.forEach(el => cIo.observe(el));
     }
   }
+
+  // ---- certificate modal ----
+  const certOverlay = document.getElementById('certModalOverlay');
+  const certTitle = document.getElementById('certModalTitle');
+  const certSub = document.getElementById('certModalSub');
+  const certBody = document.getElementById('certModalBody');
+  const certClose = document.getElementById('certModalClose');
+  let lastFocusedEl = null;
+
+  function openCertModal(card){
+    const type = card.dataset.certType;
+    const url = card.dataset.certUrl;
+    const title = card.dataset.certTitle;
+    const sub = card.dataset.certSub;
+
+    certTitle.textContent = title;
+    certSub.textContent = sub;
+    certBody.innerHTML = '';
+
+    if(type === 'image'){
+      const img = document.createElement('img');
+      img.src = url;
+      img.alt = title + ' certificate';
+      img.loading = 'eager';
+      certBody.appendChild(img);
+    } else {
+      const wrap = document.createElement('div');
+      wrap.className = 'cert-modal-linkout';
+      wrap.innerHTML = `
+        <p>This certificate is hosted on the issuing platform and opens in a new tab.</p>
+      `;
+      const link = document.createElement('a');
+      link.href = url;
+      link.target = '_blank';
+      link.rel = 'noopener';
+      link.className = 'btn btn-primary';
+      link.textContent = 'Open certificate ↗';
+      wrap.appendChild(link);
+      certBody.appendChild(wrap);
+    }
+
+    lastFocusedEl = document.activeElement;
+    certOverlay.classList.add('open');
+    certClose.focus();
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeCertModal(){
+    certOverlay.classList.remove('open');
+    certBody.innerHTML = '';
+    document.body.style.overflow = '';
+    if(lastFocusedEl) lastFocusedEl.focus();
+  }
+
+  document.querySelectorAll('.cred-clickable').forEach(card => {
+    card.addEventListener('click', () => openCertModal(card));
+    card.addEventListener('keydown', (e) => {
+      if(e.key === 'Enter' || e.key === ' '){
+        e.preventDefault();
+        openCertModal(card);
+      }
+    });
+  });
+
+  certClose.addEventListener('click', closeCertModal);
+  certOverlay.addEventListener('click', (e) => {
+    if(e.target === certOverlay) closeCertModal();
+  });
+  document.addEventListener('keydown', (e) => {
+    if(e.key === 'Escape' && certOverlay.classList.contains('open')) closeCertModal();
+  });
 
 </script>
 
