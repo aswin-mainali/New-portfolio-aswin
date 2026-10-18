@@ -365,17 +365,102 @@
   /* ---------- CONTACT ---------- */
   .contact-panel{
     background:var(--bg-elev);border:1px solid var(--border);border-radius:16px;
-    padding:56px;text-align:center;position:relative;overflow:hidden;
+    padding:48px;position:relative;overflow:hidden;
   }
   .contact-panel::before{
-    content:"";position:absolute;top:-50%;left:50%;transform:translateX(-50%);
+    content:"";position:absolute;top:-50%;left:30%;transform:translateX(-50%);
     width:600px;height:600px;background:radial-gradient(circle, var(--accent-soft) 0%, transparent 70%);
     pointer-events:none;
   }
-  .contact-panel h2{font-family:var(--display);font-size:clamp(26px,4vw,38px);font-weight:600;margin-bottom:14px;position:relative;}
-  .contact-panel p{color:var(--text-dim);max-width:460px;margin:0 auto 32px;position:relative;}
-  .contact-ctas{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;position:relative;}
-  .copy-note{font-family:var(--mono);font-size:12px;color:var(--accent-2);margin-top:14px;height:16px;position:relative;}
+  .contact-grid{display:grid;grid-template-columns:1fr 1.05fr;gap:48px;align-items:start;position:relative;}
+  .contact-info h2{font-family:var(--display);font-size:clamp(26px,4vw,38px);font-weight:600;margin-bottom:14px;}
+  .contact-info > p{color:var(--text-dim);max-width:460px;margin:0 0 22px;}
+  .avail{
+    display:flex;align-items:flex-start;gap:10px;max-width:max-content;
+    font-family:var(--mono);font-size:12.5px;line-height:1.5;color:var(--text-dim);
+    background:var(--bg-elev-2);border:1px solid var(--border);border-radius:12px;
+    padding:9px 14px;margin-bottom:24px;
+  }
+  .avail .dot{width:7px;height:7px;border-radius:50%;background:#3DDC84;box-shadow:0 0 8px #3DDC84;animation:pulse 2.2s ease-in-out infinite;flex-shrink:0;margin-top:6px;}
+  .quick-actions{display:flex;gap:10px;flex-wrap:wrap;}
+  .quick-actions .btn{padding:11px 16px;font-size:13px;}
+  .copy-note{font-family:var(--mono);font-size:12px;color:var(--accent-2);margin-top:12px;height:16px;}
+
+  .contact-form{
+    background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:22px;
+    display:flex;flex-direction:column;gap:14px;position:relative;
+  }
+  .form-title{font-family:var(--mono);font-size:12.5px;color:var(--text-faint);}
+  .form-title .p{color:var(--accent-2);}
+  .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;}
+  .intent-chips{display:flex;flex-wrap:wrap;gap:8px;}
+  .intent-chip{
+    font-family:var(--mono);font-size:12px;color:var(--text-dim);cursor:pointer;
+    background:var(--bg-elev-2);border:1px solid var(--border);border-radius:999px;
+    padding:6px 13px;transition:border-color .2s ease, color .2s ease, background-color .2s ease, transform .15s ease;
+  }
+  .intent-chip:hover{border-color:var(--text-faint);color:var(--text);}
+  .intent-chip:active{transform:scale(0.96);}
+  .intent-chip.active{border-color:var(--accent);color:var(--accent);background:var(--accent-soft);}
+  .intent-chip:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+  .field{display:flex;flex-direction:column;gap:6px;}
+  .field span{font-family:var(--mono);font-size:11.5px;color:var(--text-faint);letter-spacing:0.3px;}
+  .field input, .field textarea{
+    font-family:var(--body);font-size:14.5px;color:var(--text);
+    background:var(--bg-elev);border:1px solid var(--border);border-radius:8px;
+    padding:11px 13px;width:100%;resize:vertical;
+    transition:border-color .2s ease, box-shadow .2s ease;
+  }
+  .field input::placeholder, .field textarea::placeholder{color:var(--text-faint);}
+  .field input:focus, .field textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);}
+  .form-actions{display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+  .form-actions .btn{cursor:pointer;border:none;}
+  .form-actions .btn[disabled]{opacity:0.6;cursor:progress;}
+  .form-status{font-family:var(--mono);font-size:12px;color:var(--text-faint);min-height:16px;}
+  .form-status.err{color:var(--accent);}
+  .form-success{
+    display:none;flex-direction:column;gap:10px;align-items:flex-start;padding:10px 0;
+    font-family:var(--mono);
+  }
+  .form-fields{display:flex;flex-direction:column;gap:14px;}
+  .contact-form.sent .form-fields{display:none;}
+  .contact-form.sent .form-success{display:flex;}
+  .form-success .big{font-size:18px;color:var(--accent-2);animation:successPop .5s cubic-bezier(.2,1.4,.4,1) both;}
+  .form-success .sub{font-size:12.5px;color:var(--text-dim);line-height:1.7;}
+  .form-success .again{
+    margin-top:6px;background:none;border:1px solid var(--border);color:var(--text-dim);
+    font-family:var(--mono);font-size:12px;padding:7px 12px;border-radius:6px;cursor:pointer;
+    transition:border-color .2s ease, color .2s ease;
+  }
+  .form-success .again:hover{border-color:var(--text-faint);color:var(--text);}
+  @keyframes successPop{0%{opacity:0;transform:translateY(8px) scale(.96);}100%{opacity:1;transform:none;}}
+
+  .contact-terminal{
+    margin-top:36px;position:relative;text-align:left;
+    background:var(--bg);border:1px solid var(--border);border-radius:12px;overflow:hidden;
+  }
+  .contact-terminal .terminal-bar{padding:10px 14px;}
+  .ct-body{padding:14px 18px;font-family:var(--mono);font-size:13px;color:var(--text-dim);}
+  .ct-out{max-height:170px;overflow-y:auto;white-space:pre-wrap;line-height:1.7;word-break:break-word;}
+  .ct-out .ln-cmd{color:var(--text);}
+  .ct-out .ln-cmd::before{content:"$ ";color:var(--accent-2);}
+  .ct-out .ln-ok{color:var(--accent-2);}
+  .ct-out .ln-dim{color:var(--text-faint);}
+  .ct-out a{color:var(--accent);text-decoration:underline;text-underline-offset:3px;}
+  .ct-input-row{display:flex;align-items:center;gap:8px;margin-top:6px;}
+  .ct-input-row .p{color:var(--accent-2);}
+  .ct-input{
+    flex:1;min-width:0;background:none;border:none;outline:none;color:var(--text);
+    font-family:var(--mono);font-size:13px;padding:6px 0;
+  }
+  .ct-input::placeholder{color:var(--text-faint);}
+  .ct-chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}
+  .ct-chip{
+    font-family:var(--mono);font-size:11.5px;color:var(--text-faint);cursor:pointer;
+    background:none;border:1px solid var(--border-soft);border-radius:6px;padding:4px 9px;
+    transition:color .2s ease, border-color .2s ease;
+  }
+  .ct-chip:hover{color:var(--accent);border-color:var(--accent);}
 
   footer{
     border-top:1px solid var(--border-soft);padding:32px 0;
@@ -401,6 +486,7 @@
     .hero{padding-top:96px;padding-bottom:48px;}
     .cred-grid{grid-template-columns:1fr;}
     .contact-panel{padding:36px 22px;}
+    .contact-grid{grid-template-columns:1fr;gap:32px;}
     .ticket-head{gap:8px;}
     .about-facts div{flex-wrap:wrap;}
     .about-facts .k{width:auto;}
@@ -416,7 +502,9 @@
     .btn{padding:12px 18px;font-size:13px;}
     .section-title{font-size:26px;}
     .contact-panel{padding:28px 16px;}
-    .contact-ctas .btn{width:100%;justify-content:center;}
+    .quick-actions .btn{flex:1 1 calc(50% - 10px);justify-content:center;}
+    .contact-form{padding:16px;}
+    .ct-body{padding:12px 14px;font-size:12.5px;}
   }
   @media (max-height:480px) and (orientation:landscape){
     .hero{min-height:auto;padding-top:110px;padding-bottom:40px;}
@@ -900,14 +988,63 @@
   <!-- CONTACT -->
   <section id="contact">
     <div class="contact-panel reveal">
-      <h2>Let's talk</h2>
-      <p>Open to technical support, QA, and product-adjacent roles — and always happy to talk shop about Stoop, Budgetly, or whatever's broken.</p>
-      <div class="contact-ctas">
-        <button class="btn btn-primary" id="copyEmail">Copy email</button>
-        <a href="https://www.linkedin.com/in/aswin-mainali-75b73b225/" target="_blank" rel="noopener" class="btn btn-outline">LinkedIn</a>
-        <a href="mailto:mainali.aswin88@gmail.com" class="btn btn-outline">mainali.aswin88@gmail.com</a>
+      <div class="contact-grid">
+        <div class="contact-info">
+          <h2>Let's talk</h2>
+          <p>Open to technical support, QA, and product-adjacent roles — and always happy to talk shop about Stoop, Budgetly, or whatever's broken.</p>
+          <div class="avail" id="avail"><span class="dot"></span><span id="availText">Open to work · Richmond, BC</span></div>
+          <div class="quick-actions">
+            <button class="btn btn-primary" id="copyEmail" type="button">Copy email</button>
+            <a href="Aswin_Mainali_Resume.pdf" target="_blank" rel="noopener" class="btn btn-outline">Resume</a>
+            <a href="https://www.linkedin.com/in/aswin-mainali-75b73b225/" target="_blank" rel="noopener" class="btn btn-outline">LinkedIn</a>
+            <a href="mailto:mainali.aswin88@gmail.com?subject=Intro%20call%20request&body=Hi%20Aswin%2C%0A%0AI'd%20like%20to%20set%20up%20a%2015-minute%20intro%20call.%20A%20few%20times%20that%20work%20for%20me%3A%0A%0A-%20%0A-%20%0A%0AThanks!" class="btn btn-outline" id="bookCall">Book a 15-min call</a>
+            <a href="mailto:mainali.aswin88@gmail.com?subject=Hello%20Aswin" class="btn btn-outline">Email me</a>
+          </div>
+          <div class="copy-note" id="copyNote"></div>
+        </div>
+
+        <form class="contact-form" id="contactForm" name="contact" method="POST" action="/" data-netlify="true" netlify-honeypot="bot-field">
+          <input type="hidden" name="form-name" value="contact">
+          <p class="hp"><label>Leave this empty: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+          <div class="form-title"><span class="p">$</span> send --to aswin</div>
+          <div class="form-fields">
+            <div class="intent-chips" role="radiogroup" aria-label="What is this about?">
+              <button type="button" class="intent-chip active" role="radio" aria-checked="true" data-intent="Hiring">Hiring</button>
+              <button type="button" class="intent-chip" role="radio" aria-checked="false" data-intent="Project / collab">Project / collab</button>
+              <button type="button" class="intent-chip" role="radio" aria-checked="false" data-intent="Just saying hi">Just saying hi</button>
+            </div>
+            <input type="hidden" name="intent" id="intentInput" value="Hiring">
+            <label class="field"><span>name</span><input type="text" name="name" required autocomplete="name" placeholder="Your name"></label>
+            <label class="field"><span>email</span><input type="email" name="email" required autocomplete="email" placeholder="you@example.com"></label>
+            <label class="field"><span>message</span><textarea name="message" rows="4" required placeholder="What's on your mind?"></textarea></label>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary" id="sendBtn">Send message</button>
+              <div class="form-status" id="formStatus" role="status" aria-live="polite"></div>
+            </div>
+          </div>
+          <div class="form-success" aria-live="polite">
+            <div class="big">✓ Message queued.</div>
+            <div class="sub">Thanks — Aswin will get back to you soon.<br>Need a faster answer? Email mainali.aswin88@gmail.com.</div>
+            <button type="button" class="again" id="sendAnother">$ send --another</button>
+          </div>
+        </form>
       </div>
-      <div class="copy-note" id="copyNote"></div>
+
+      <div class="contact-terminal">
+        <div class="terminal-bar"><span></span><span></span><span></span><div class="fname">contact.sh</div></div>
+        <div class="ct-body">
+          <div class="ct-out" id="ctOut" aria-live="polite"></div>
+          <div class="ct-input-row"><span class="p">$</span><input class="ct-input" id="ctInput" type="text" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="type a command — try help" aria-label="Contact terminal command"></div>
+          <div class="ct-chips" id="ctChips">
+            <button type="button" class="ct-chip" data-cmd="help">help</button>
+            <button type="button" class="ct-chip" data-cmd="email">email</button>
+            <button type="button" class="ct-chip" data-cmd="linkedin">linkedin</button>
+            <button type="button" class="ct-chip" data-cmd="resume">resume</button>
+            <button type="button" class="ct-chip" data-cmd="projects">projects</button>
+            <button type="button" class="ct-chip" data-cmd="time">time</button>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -1070,6 +1207,163 @@
     }
     setTimeout(() => copyNote.textContent = '', 2500);
   });
+
+  // ---- contact: live local time / availability ----
+  (function(){
+    const el = document.getElementById('availText');
+    if(!el) return;
+    function update(){
+      let t = '';
+      try{
+        t = new Intl.DateTimeFormat('en-US', {timeZone:'America/Vancouver', hour:'numeric', minute:'2-digit', timeZoneName:'short'}).format(new Date());
+      }catch(e){}
+      el.textContent = 'Open to work · Richmond, BC' + (t ? ' · ' + t : '') + ' · usually replies within 24h';
+    }
+    update();
+    setInterval(update, 30000);
+  })();
+
+  // ---- contact: intent chips + form ----
+  (function(){
+    const form = document.getElementById('contactForm');
+    if(!form) return;
+    const chips = form.querySelectorAll('.intent-chip');
+    const intentInput = document.getElementById('intentInput');
+    const status = document.getElementById('formStatus');
+    const sendBtn = document.getElementById('sendBtn');
+
+    chips.forEach(chip => chip.addEventListener('click', () => {
+      chips.forEach(c => { c.classList.remove('active'); c.setAttribute('aria-checked','false'); });
+      chip.classList.add('active');
+      chip.setAttribute('aria-checked','true');
+      intentInput.value = chip.dataset.intent;
+    }));
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      status.className = 'form-status';
+      status.textContent = '';
+      sendBtn.disabled = true;
+      sendBtn.textContent = 'Sending…';
+      try{
+        if(location.protocol === 'file:') throw new Error('preview');
+        const body = new URLSearchParams(new FormData(form)).toString();
+        const res = await fetch('/', {method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body});
+        if(!res.ok) throw new Error('bad status');
+        form.classList.add('sent');
+        form.reset();
+        chips.forEach(c => { c.classList.remove('active'); c.setAttribute('aria-checked','false'); });
+        chips[0].classList.add('active'); chips[0].setAttribute('aria-checked','true');
+        intentInput.value = chips[0].dataset.intent;
+      }catch(err){
+        status.className = 'form-status err';
+        status.textContent = "Couldn't send — please email mainali.aswin88@gmail.com instead.";
+      }finally{
+        sendBtn.disabled = false;
+        sendBtn.textContent = 'Send message';
+      }
+    });
+
+    const again = document.getElementById('sendAnother');
+    if(again) again.addEventListener('click', () => { form.classList.remove('sent'); status.textContent = ''; });
+  })();
+
+  // ---- contact: mini terminal ----
+  (function(){
+    const out = document.getElementById('ctOut');
+    const input = document.getElementById('ctInput');
+    const chipsWrap = document.getElementById('ctChips');
+    if(!out || !input) return;
+    const EMAIL = 'mainali.aswin88@gmail.com';
+    const LINKEDIN = 'https://www.linkedin.com/in/aswin-mainali-75b73b225/';
+    const history = [];
+    let hIdx = 0;
+
+    function line(text, cls){
+      const d = document.createElement('div');
+      if(cls) d.className = cls;
+      d.textContent = text;
+      out.appendChild(d);
+      out.scrollTop = out.scrollHeight;
+      return d;
+    }
+    function linkLine(prefix, text, href){
+      const d = document.createElement('div');
+      d.appendChild(document.createTextNode(prefix));
+      const a = document.createElement('a');
+      a.href = href; a.textContent = text;
+      if(href.startsWith('http')){ a.target = '_blank'; a.rel = 'noopener'; }
+      d.appendChild(a);
+      out.appendChild(d);
+      out.scrollTop = out.scrollHeight;
+    }
+    function vancouverTime(){
+      try{
+        return new Intl.DateTimeFormat('en-US', {timeZone:'America/Vancouver', weekday:'short', hour:'numeric', minute:'2-digit', timeZoneName:'short'}).format(new Date());
+      }catch(e){ return 'unavailable'; }
+    }
+    function go(sel){
+      const el = document.querySelector(sel);
+      if(el) el.scrollIntoView({behavior: reduceMotion ? 'auto' : 'smooth'});
+    }
+
+    const cmds = {
+      help(){
+        ['available commands:',
+         '  email      show + copy my email',
+         '  linkedin   open my LinkedIn',
+         '  resume     open my resume (PDF)',
+         '  projects   jump to projects',
+         '  whoami     one-line intro',
+         '  time       my local time',
+         '  clear      clear the screen'].forEach(t => line(t, 'ln-dim'));
+      },
+      email(){
+        linkLine('', EMAIL, 'mailto:' + EMAIL);
+        if(navigator.clipboard) navigator.clipboard.writeText(EMAIL).then(() => line('✓ copied to clipboard', 'ln-ok')).catch(()=>{});
+      },
+      linkedin(){ line('opening LinkedIn…', 'ln-ok'); window.open(LINKEDIN, '_blank', 'noopener'); },
+      resume(){ line('opening resume…', 'ln-ok'); window.open('Aswin_Mainali_Resume.pdf', '_blank', 'noopener'); },
+      projects(){ line('scrolling to projects…', 'ln-ok'); go('#projects'); },
+      whoami(){ line('aswin_mainali — technical support, QA & product builder · Richmond, BC', 'ln-dim'); },
+      time(){ line(vancouverTime() + ' (Richmond, BC)', 'ln-dim'); },
+      clear(){ out.innerHTML = ''; },
+      sudo(args){
+        if(args.join(' ') === 'hire-me'){
+          line('[sudo] permission granted ✓', 'ln-ok');
+          line('opening email…', 'ln-dim');
+          window.location.href = 'mailto:' + EMAIL + '?subject=Let%27s%20work%20together';
+        } else {
+          line('usage: sudo <command>', 'ln-dim');
+        }
+      }
+    };
+    cmds.about = cmds.whoami;
+    cmds.ls = () => line('email  linkedin  resume  projects  whoami  time', 'ln-dim');
+
+    function run(raw){
+      const text = raw.trim();
+      if(!text) return;
+      line(text, 'ln-cmd');
+      history.push(text); hIdx = history.length;
+      const parts = text.split(/\s+/);
+      const name = parts[0].toLowerCase();
+      if(Object.prototype.hasOwnProperty.call(cmds, name)) cmds[name](parts.slice(1));
+      else line('command not found: ' + name + ' — try help', 'ln-dim');
+    }
+
+    input.addEventListener('keydown', (e) => {
+      if(e.key === 'Enter'){ run(input.value); input.value = ''; }
+      else if(e.key === 'ArrowUp'){ if(hIdx > 0){ hIdx--; input.value = history[hIdx]; e.preventDefault(); } }
+      else if(e.key === 'ArrowDown'){ if(hIdx < history.length - 1){ hIdx++; input.value = history[hIdx]; } else { hIdx = history.length; input.value = ''; } e.preventDefault(); }
+    });
+    if(chipsWrap) chipsWrap.addEventListener('click', (e) => {
+      const b = e.target.closest('.ct-chip');
+      if(b) run(b.dataset.cmd);
+    });
+
+    line("type 'help' to see what I can do.", 'ln-dim');
+  })();
 
   // ---- modern interaction layer ----
   const canHover = window.matchMedia('(hover:hover)').matches && !reduceMotion;
