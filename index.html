@@ -5,12 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Aswin Mainali — Technical Support | QA | Product Builder</title>
 <meta name="description" content="Aswin Mainali — Technical support professional based in Richmond, BC, expanding into QA and product development. Building Stoop and Budgetly.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230B0E14'/%3E%3Ctext x='32' y='41' font-family='JetBrains Mono, monospace' font-size='26' font-weight='600' fill='%23FF8A3D' text-anchor='middle'%3EAM%3C/text%3E%3Ccircle cx='50' cy='16' r='5' fill='%234FD1C5'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg:#0B0E14;
+    --bg-rgb:11,14,20;
     --bg-elev:#131826;
     --bg-elev-2:#1A2032;
     --accent:#FF8A3D;
@@ -26,6 +28,21 @@
     --display:'Space Grotesk',sans-serif;
     --body:'Inter',sans-serif;
     --mono:'JetBrains Mono',monospace;
+  }
+  :root[data-theme="light"]{
+    --bg:#F4F5F7;
+    --bg-rgb:244,245,247;
+    --bg-elev:#FFFFFF;
+    --bg-elev-2:#ECEEF2;
+    --accent:#E06B1F;
+    --accent-soft:rgba(224,107,31,0.10);
+    --accent-2:#1A9589;
+    --accent-2-soft:rgba(26,149,137,0.10);
+    --text:#15181F;
+    --text-dim:#4B5468;
+    --text-faint:#8991A3;
+    --border:#DCE0E8;
+    --border-soft:#E7EAEF;
   }
   *{margin:0;padding:0;box-sizing:border-box;}
   html{scroll-behavior:smooth;overflow-x:hidden;width:100%;}
@@ -56,10 +73,11 @@
   /* ---------- NAV ---------- */
   header{
     position:fixed;top:0;left:0;right:0;z-index:100;
-    background:rgba(11,14,20,0.72);
+    background:rgba(var(--bg-rgb),0.72);
     backdrop-filter:blur(14px);
     -webkit-backdrop-filter:blur(14px);
     border-bottom:1px solid var(--border-soft);
+    transition:background-color .3s ease, border-color .3s ease;
   }
   nav{
     max-width:1120px;margin:0 auto;padding:16px 28px;
@@ -70,6 +88,7 @@
     display:flex;align-items:center;gap:8px;
   }
   .logo .dot{width:7px;height:7px;border-radius:50%;background:var(--accent-2);box-shadow:0 0 8px var(--accent-2);animation:pulse 2.4s ease-in-out infinite;}
+  .nav-right{display:flex;align-items:center;gap:24px;}
   .nav-links{display:flex;gap:32px;align-items:center;}
   .nav-links a{
     font-family:var(--mono);font-size:13px;color:var(--text-dim);
@@ -163,7 +182,7 @@
     text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px;
     display:flex;align-items:center;gap:10px;
   }
-  .section-label::before{content:"//";color:var(--text-faint);}
+  .section-label::before{content:"$";color:var(--accent-2);}
   .section-title{
     font-family:var(--display);font-size:clamp(28px,4vw,40px);font-weight:600;
     margin-bottom:20px;letter-spacing:-0.01em;
@@ -375,9 +394,102 @@
   }
   .tilt-card:hover::after{opacity:1;}
 
+  /* ---------- THEME TRANSITION ---------- */
+  body, header, .terminal-card, .project-card, .skill-panel, .cred-card, .contact-panel, .hero-stats div{
+    transition:background-color .3s ease, border-color .3s ease, color .3s ease;
+  }
+
+  /* ---------- GRAIN TEXTURE ---------- */
+  .grain-overlay{
+    position:fixed;inset:0;z-index:2;pointer-events:none;
+    opacity:0.035;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  :root[data-theme="light"] .grain-overlay{opacity:0.025;mix-blend-mode:multiply;}
+
+  /* ---------- SCAN SWEEP (hero load) ---------- */
+  .scan-sweep{
+    position:fixed;left:0;right:0;top:0;height:140px;z-index:3;pointer-events:none;
+    background:linear-gradient(180deg, rgba(79,209,197,0) 0%, rgba(79,209,197,0.07) 50%, rgba(79,209,197,0) 100%);
+    animation:scanSweep 2.2s ease-out 0.15s 1 both;
+  }
+  @keyframes scanSweep{
+    0%{transform:translateY(-140px);opacity:0;}
+    12%{opacity:1;}
+    100%{transform:translateY(100vh);opacity:0;}
+  }
+
+  /* ---------- NAV ICON BUTTONS ---------- */
+  .icon-btn{
+    background:var(--bg-elev);border:1px solid var(--border);color:var(--text-dim);
+    width:36px;height:36px;border-radius:7px;flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;
+    cursor:pointer;transition:all .2s ease;font-size:14px;
+  }
+  .icon-btn:hover{color:var(--text);border-color:var(--text-faint);}
+  .cmd-kbd{font-family:var(--mono);font-size:10.5px;letter-spacing:0.3px;}
+  .theme-icon{font-size:15px;line-height:1;}
+  @media (max-width:640px){
+    .icon-btn{display:none;}
+  }
+
+  /* ---------- BACK TO TOP ---------- */
+  .back-to-top{
+    position:fixed;right:22px;bottom:22px;z-index:90;
+    width:44px;height:44px;border-radius:10px;
+    background:var(--bg-elev);border:1px solid var(--border);color:var(--text);
+    font-size:18px;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+    opacity:0;pointer-events:none;transform:translateY(8px);
+    transition:opacity .25s ease, transform .25s ease, border-color .2s ease;
+  }
+  .back-to-top.visible{opacity:1;pointer-events:auto;transform:translateY(0);}
+  .back-to-top:hover{border-color:var(--accent);color:var(--accent);}
+
+  /* ---------- COMMAND PALETTE ---------- */
+  .cmd-overlay{
+    position:fixed;inset:0;z-index:300;
+    background:rgba(5,7,12,0.78);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+    display:flex;align-items:flex-start;justify-content:center;
+    padding:14vh 20px 20px;
+    opacity:0;pointer-events:none;transition:opacity .2s ease;
+  }
+  .cmd-overlay.open{opacity:1;pointer-events:auto;}
+  .cmd-palette{
+    width:100%;max-width:540px;
+    background:var(--bg-elev);border:1px solid var(--border);border-radius:12px;
+    overflow:hidden;
+    transform:translateY(-10px);transition:transform .2s ease;
+    box-shadow:0 20px 60px rgba(0,0,0,0.4);
+  }
+  .cmd-overlay.open .cmd-palette{transform:translateY(0);}
+  .cmd-input-row{
+    display:flex;align-items:center;gap:10px;padding:16px 18px;
+    border-bottom:1px solid var(--border);
+  }
+  .cmd-prompt{font-family:var(--mono);color:var(--accent-2);font-size:15px;}
+  .cmd-input{
+    flex:1;background:none;border:none;outline:none;color:var(--text);
+    font-family:var(--mono);font-size:14.5px;
+  }
+  .cmd-input::placeholder{color:var(--text-faint);}
+  .cmd-esc{font-family:var(--mono);font-size:10.5px;color:var(--text-faint);border:1px solid var(--border);padding:2px 6px;border-radius:4px;}
+  .cmd-results{max-height:320px;overflow-y:auto;padding:8px;}
+  .cmd-item{
+    display:flex;align-items:center;justify-content:space-between;gap:10px;
+    padding:11px 12px;border-radius:7px;cursor:pointer;
+    font-family:var(--mono);font-size:13px;color:var(--text-dim);
+  }
+  .cmd-item .cmd-item-name{color:var(--text);font-family:var(--body);font-size:14px;}
+  .cmd-item .cmd-item-hint{color:var(--text-faint);font-size:11px;}
+  .cmd-item.active,.cmd-item:hover{background:var(--bg-elev-2);}
+  .cmd-item.active .cmd-item-name,.cmd-item:hover .cmd-item-name{color:var(--accent);}
+  .cmd-empty{padding:20px 12px;color:var(--text-faint);font-family:var(--mono);font-size:13px;text-align:center;}
+
   @media (prefers-reduced-motion: reduce){
     *{animation:none !important;transition:none !important;}
     .cursor-glow{display:none;}
+    .scan-sweep{display:none;}
   }
   @media (hover:none){
     .cursor-glow{display:none;}
@@ -386,6 +498,8 @@
 </head>
 <body>
 
+<div class="grain-overlay"></div>
+<div class="scan-sweep"></div>
 <div class="grid-bg"></div>
 <div class="cursor-glow" id="cursorGlow"></div>
 <div class="scroll-progress"><div class="scroll-progress-bar" id="scrollBar"></div></div>
@@ -393,14 +507,22 @@
 <header>
   <nav>
     <div class="logo"><span class="dot"></span>AM_</div>
-    <div class="nav-links">
-      <a href="#about">About</a>
-      <a href="#experience">Experience</a>
-      <a href="#projects">Projects</a>
-      <a href="#skills">Skills</a>
-      <a href="#contact">Contact</a>
+    <div class="nav-right">
+      <div class="nav-links">
+        <a href="#about">About</a>
+        <a href="#experience">Experience</a>
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <button class="icon-btn" id="cmdTrigger" aria-label="Open command menu" title="Command menu (⌘K)">
+        <span class="cmd-kbd">⌘K</span>
+      </button>
+      <button class="icon-btn" id="themeToggle" aria-label="Toggle light / dark theme" title="Toggle theme">
+        <span class="theme-icon" id="themeIcon">◐</span>
+      </button>
+      <a href="Aswin_Mainali_Resume.pdf" class="nav-cta" target="_blank" rel="noopener">./resume.pdf</a>
     </div>
-    <a href="Aswin_Mainali_Resume.pdf" class="nav-cta" target="_blank" rel="noopener">./resume.pdf</a>
     <button class="burger" id="burger" aria-label="Open menu"><span></span><span></span><span></span></button>
   </nav>
 </header>
@@ -689,6 +811,21 @@
   </div>
 </footer>
 
+<!-- BACK TO TOP -->
+<button class="back-to-top" id="backToTop" aria-label="Back to top">↑</button>
+
+<!-- COMMAND PALETTE -->
+<div class="cmd-overlay" id="cmdOverlay">
+  <div class="cmd-palette" role="dialog" aria-modal="true" aria-label="Command menu">
+    <div class="cmd-input-row">
+      <span class="cmd-prompt">$</span>
+      <input type="text" id="cmdInput" class="cmd-input" placeholder="Type a command or search…" autocomplete="off" spellcheck="false">
+      <span class="cmd-esc">esc</span>
+    </div>
+    <div class="cmd-results" id="cmdResults"></div>
+  </div>
+</div>
+
 <script>
   // typing effect
   const roles = [
@@ -866,6 +1003,152 @@
       counters.forEach(el => cIo.observe(el));
     }
   }
+
+  // ---- theme toggle ----
+  const themeIcon = document.getElementById('themeIcon');
+  const themeToggle = document.getElementById('themeToggle');
+  function applyTheme(theme){
+    if(theme === 'light'){
+      document.documentElement.setAttribute('data-theme', 'light');
+      themeIcon.textContent = '◑';
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+      themeIcon.textContent = '◐';
+    }
+  }
+  let savedTheme = null;
+  try{ savedTheme = localStorage.getItem('am-theme'); }catch(e){}
+  if(savedTheme) applyTheme(savedTheme);
+
+  themeToggle.addEventListener('click', () => {
+    const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+    const next = isLight ? 'dark' : 'light';
+    applyTheme(next);
+    try{ localStorage.setItem('am-theme', next); }catch(e){}
+  });
+
+  // ---- back to top ----
+  const backToTop = document.getElementById('backToTop');
+  function updateBackToTop(){
+    if(window.scrollY > window.innerHeight * 0.6){
+      backToTop.classList.add('visible');
+    } else {
+      backToTop.classList.remove('visible');
+    }
+  }
+  document.addEventListener('scroll', updateBackToTop, {passive:true});
+  updateBackToTop();
+  backToTop.addEventListener('click', () => {
+    window.scrollTo({top:0, behavior: reduceMotion ? 'auto' : 'smooth'});
+  });
+
+  // ---- command palette ----
+  const cmdOverlay = document.getElementById('cmdOverlay');
+  const cmdInput = document.getElementById('cmdInput');
+  const cmdResults = document.getElementById('cmdResults');
+  const cmdTrigger = document.getElementById('cmdTrigger');
+
+  const commands = [
+    { name: 'Go to Home', hint: '#home', action: () => scrollToSection('#home') },
+    { name: 'Go to About', hint: '#about', action: () => scrollToSection('#about') },
+    { name: 'Go to Experience', hint: '#experience', action: () => scrollToSection('#experience') },
+    { name: 'Go to Projects', hint: '#projects', action: () => scrollToSection('#projects') },
+    { name: 'Go to Skills', hint: '#skills', action: () => scrollToSection('#skills') },
+    { name: 'Go to Certifications', hint: '#credentials', action: () => scrollToSection('#credentials') },
+    { name: 'Go to Contact', hint: '#contact', action: () => scrollToSection('#contact') },
+    { name: 'Open resume (PDF)', hint: '↗ new tab', action: () => window.open('Aswin_Mainali_Resume.pdf', '_blank') },
+    { name: 'Open LinkedIn', hint: '↗ new tab', action: () => window.open('https://www.linkedin.com/in/aswin-mainali-75b73b225/', '_blank') },
+    { name: 'Copy email address', hint: 'mainali.aswin88@gmail.com', action: () => copyEmailToClipboard() },
+    { name: 'Toggle theme', hint: 'light / dark', action: () => themeToggle.click() },
+  ];
+
+  function scrollToSection(sel){
+    const el = document.querySelector(sel);
+    if(el) el.scrollIntoView({behavior: reduceMotion ? 'auto' : 'smooth'});
+  }
+
+  function copyEmailToClipboard(){
+    const copyBtnEl = document.getElementById('copyEmail');
+    if(copyBtnEl) copyBtnEl.click();
+  }
+
+  let activeIndex = 0;
+  let filtered = commands;
+
+  function renderResults(){
+    cmdResults.innerHTML = '';
+    if(filtered.length === 0){
+      cmdResults.innerHTML = '<div class="cmd-empty">No matching command</div>';
+      return;
+    }
+    filtered.forEach((cmd, i) => {
+      const item = document.createElement('div');
+      item.className = 'cmd-item' + (i === activeIndex ? ' active' : '');
+      item.innerHTML = `<span class="cmd-item-name">${cmd.name}</span><span class="cmd-item-hint">${cmd.hint}</span>`;
+      item.addEventListener('click', () => runCommand(cmd));
+      item.addEventListener('mouseenter', () => { activeIndex = i; renderResults(); });
+      cmdResults.appendChild(item);
+    });
+  }
+
+  function runCommand(cmd){
+    closeCmdPalette();
+    cmd.action();
+  }
+
+  function openCmdPalette(){
+    cmdOverlay.classList.add('open');
+    cmdInput.value = '';
+    filtered = commands;
+    activeIndex = 0;
+    renderResults();
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => cmdInput.focus(), 10);
+  }
+
+  function closeCmdPalette(){
+    cmdOverlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  cmdInput.addEventListener('input', () => {
+    const q = cmdInput.value.toLowerCase().trim();
+    filtered = q === '' ? commands : commands.filter(c => c.name.toLowerCase().includes(q));
+    activeIndex = 0;
+    renderResults();
+  });
+
+  cmdInput.addEventListener('keydown', (e) => {
+    if(e.key === 'ArrowDown'){
+      e.preventDefault();
+      activeIndex = Math.min(activeIndex + 1, filtered.length - 1);
+      renderResults();
+    } else if(e.key === 'ArrowUp'){
+      e.preventDefault();
+      activeIndex = Math.max(activeIndex - 1, 0);
+      renderResults();
+    } else if(e.key === 'Enter'){
+      e.preventDefault();
+      if(filtered[activeIndex]) runCommand(filtered[activeIndex]);
+    }
+  });
+
+  cmdTrigger.addEventListener('click', openCmdPalette);
+  cmdOverlay.addEventListener('click', (e) => {
+    if(e.target === cmdOverlay) closeCmdPalette();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    const isCmdK = (e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k';
+    const isSlash = e.key === '/' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA';
+    if(isCmdK || isSlash){
+      e.preventDefault();
+      if(cmdOverlay.classList.contains('open')) closeCmdPalette();
+      else openCmdPalette();
+    } else if(e.key === 'Escape' && cmdOverlay.classList.contains('open')){
+      closeCmdPalette();
+    }
+  });
 
 </script>
 
