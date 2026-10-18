@@ -112,6 +112,17 @@
   }
   .mobile-menu.open{transform:translateY(0);}
   .mobile-menu a{font-family:var(--mono);font-size:20px;color:var(--text);}
+  .mobile-menu-tools{
+    display:flex;gap:14px;margin-top:10px;
+  }
+  .mobile-tool-btn{
+    display:flex;align-items:center;gap:9px;
+    background:var(--bg-elev);border:1px solid var(--border);color:var(--text-dim);
+    font-family:var(--mono);font-size:13px;
+    padding:10px 16px;border-radius:8px;cursor:pointer;
+  }
+  .mobile-tool-btn .cmd-kbd{color:var(--accent-2);font-size:12px;}
+  .mobile-tool-btn .theme-icon{font-size:14px;}
 
   /* ---------- HERO ---------- */
   .hero{
@@ -534,6 +545,14 @@
   <a href="#skills">Skills</a>
   <a href="#contact">Contact</a>
   <a href="Aswin_Mainali_Resume.pdf" target="_blank" rel="noopener" style="color:var(--accent);">./resume.pdf</a>
+  <div class="mobile-menu-tools">
+    <button class="mobile-tool-btn" id="cmdTriggerMobile">
+      <span class="cmd-kbd">⌘K</span><span>Command menu</span>
+    </button>
+    <button class="mobile-tool-btn" id="themeToggleMobile">
+      <span class="theme-icon" id="themeIconMobile">◐</span><span>Toggle theme</span>
+    </button>
+  </div>
 </div>
 
 <main class="wrap">
@@ -1006,25 +1025,33 @@
 
   // ---- theme toggle ----
   const themeIcon = document.getElementById('themeIcon');
+  const themeIconMobile = document.getElementById('themeIconMobile');
   const themeToggle = document.getElementById('themeToggle');
+  const themeToggleMobile = document.getElementById('themeToggleMobile');
   function applyTheme(theme){
+    const icon = theme === 'light' ? '◑' : '◐';
     if(theme === 'light'){
       document.documentElement.setAttribute('data-theme', 'light');
-      themeIcon.textContent = '◑';
     } else {
       document.documentElement.removeAttribute('data-theme');
-      themeIcon.textContent = '◐';
     }
+    if(themeIcon) themeIcon.textContent = icon;
+    if(themeIconMobile) themeIconMobile.textContent = icon;
   }
   let savedTheme = null;
   try{ savedTheme = localStorage.getItem('am-theme'); }catch(e){}
   if(savedTheme) applyTheme(savedTheme);
 
-  themeToggle.addEventListener('click', () => {
+  function toggleTheme(){
     const isLight = document.documentElement.getAttribute('data-theme') === 'light';
     const next = isLight ? 'dark' : 'light';
     applyTheme(next);
     try{ localStorage.setItem('am-theme', next); }catch(e){}
+  }
+  themeToggle.addEventListener('click', toggleTheme);
+  if(themeToggleMobile) themeToggleMobile.addEventListener('click', () => {
+    toggleTheme();
+    mobileMenu.classList.remove('open');
   });
 
   // ---- back to top ----
@@ -1134,6 +1161,11 @@
   });
 
   cmdTrigger.addEventListener('click', openCmdPalette);
+  const cmdTriggerMobile = document.getElementById('cmdTriggerMobile');
+  if(cmdTriggerMobile) cmdTriggerMobile.addEventListener('click', () => {
+    mobileMenu.classList.remove('open');
+    openCmdPalette();
+  });
   cmdOverlay.addEventListener('click', (e) => {
     if(e.target === cmdOverlay) closeCmdPalette();
   });
