@@ -99,8 +99,15 @@
   }
   .logo{
     font-family:var(--mono);font-weight:600;font-size:15px;letter-spacing:0.5px;
-    display:flex;align-items:center;gap:8px;
+    display:flex;align-items:center;gap:8px;white-space:nowrap;cursor:pointer;
+    transition:opacity .2s ease, transform .15s ease;
   }
+  .logo:hover{opacity:0.85;}
+  .logo:active{transform:scale(0.97);}
+  .logo:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:4px;}
+  .logo .l-user{color:var(--accent-2);}
+  .logo .l-sep{color:var(--text-dim);font-weight:500;}
+  .logo .l-cursor{display:inline-block;width:8px;height:1.05em;background:var(--accent);margin-left:2px;animation:blink 1s step-end infinite;}
   .logo .dot{width:7px;height:7px;border-radius:50%;background:var(--accent-2);box-shadow:0 0 8px var(--accent-2);animation:pulse 2.4s ease-in-out infinite;}
   .nav-right{display:flex;align-items:center;gap:24px;}
   .nav-links{display:flex;gap:32px;align-items:center;}
@@ -684,7 +691,7 @@
 
 <header>
   <nav>
-    <div class="logo"><span class="dot"></span>AM_</div>
+    <a href="#home" class="logo" id="logoLink" aria-label="Aswin Mainali — back to top"><span class="dot"></span><span class="l-user">aswin@portfolio</span><span class="l-sep">:~$</span><span class="l-cursor"></span></a>
     <div class="nav-right">
       <div class="nav-links">
         <a href="#about">About</a>
@@ -1178,6 +1185,15 @@
   const mobileMenu = document.getElementById('mobileMenu');
   burger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
   mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.remove('open')));
+
+  // logo: back to top
+  const logoLink = document.getElementById('logoLink');
+  if(logoLink) logoLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    mobileMenu.classList.remove('open');
+    window.scrollTo({top:0, behavior: reduceMotion ? 'auto' : 'smooth'});
+    if(history.replaceState) history.replaceState(null, '', location.pathname + location.search);
+  });
 
   // copy email
   const copyBtn = document.getElementById('copyEmail');
